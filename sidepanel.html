@@ -184,6 +184,19 @@
 
         <!-- TAB: Overview (chapters + key quotes) - requires LLM -->
         <div class="tab-panel" data-panel="overview">
+          <!-- CAROLYN: 跳转目录,点一下滚到对应段 -->
+          <nav class="overview-jump" id="overviewJump" hidden>
+            <button type="button" class="jump-pill" data-jump="execSummarySection">
+              Summary
+            </button>
+            <button type="button" class="jump-pill" data-jump="chaptersSection">
+              Chapters
+            </button>
+            <button type="button" class="jump-pill" data-jump="quotesSection">
+              Quotes
+            </button>
+          </nav>
+
           <!-- CAROLYN: Executive Summary(本地二创,上游没有这块) -->
           <div class="section" id="execSummarySection" hidden>
             <div class="section-title">Executive Summary</div>
@@ -191,8 +204,11 @@
           </div>
 
           <!-- Chapters -->
-          <div class="section">
-            <div class="section-title">Chapters</div>
+          <div class="section" id="chaptersSection">
+            <button type="button" class="section-toggle" data-collapse="chaptersSection">
+              <span class="section-title">Chapters</span>
+              <span class="section-chevron" aria-hidden="true"></span>
+            </button>
             <ul class="chapter-list" id="chapterList">
               <li
                 class="chapter-item"
@@ -208,8 +224,11 @@
           </div>
 
           <!-- Key Quotes -->
-          <div class="section">
-            <div class="section-title">Key Quotes</div>
+          <div class="section" id="quotesSection">
+            <button type="button" class="section-toggle" data-collapse="quotesSection">
+              <span class="section-title">Key Quotes</span>
+              <span class="section-chevron" aria-hidden="true"></span>
+            </button>
             <div id="quotesList">
               <div
                 class="quote-item"

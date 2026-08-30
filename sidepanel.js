@@ -26,6 +26,8 @@ let currentChannelName = "";
 let currentVideoDescription = "";
 let currentVideoDuration = 0;
 let isAnalysisLoading = false; // Track if analysis is in progress
+/* CAROLYN: Overview 结构版本。每次改 execSummary/chapters/quotes 的形状就 +1。 */
+const ANALYSIS_SCHEMA_VERSION = 2;
 let youtubeTabId = null; // Store the YouTube tab ID for reliable messaging
 let errorAction = null;
 
@@ -255,6 +257,9 @@ function groupTranscriptEntries(entries, limits = TRANSCRIPT_SEGMENT_LIMITS) {
 document.addEventListener("DOMContentLoaded", async () => {
   setTranscriptModeButtons("original");
   setupEventListeners();
+  /* CAROLYN: Overview 跳转目录 + 折叠状态 */
+  setupOverviewNav();
+  await loadCollapsedSections();
   await evictOldCacheEntries(20);
 
   const configStatus = await chrome.runtime.sendMessage({
@@ -901,6 +906,70 @@ function translateNotesContent() {
  * Renders the analysis results into the Overview tab.
  * Shows chapters and key quotes only.
  */
+/* ============================================================
+   CAROLYN: Overview 导航 —— 顶部跳转目录 + 分段折叠
+   ============================================================ */
+const COLLAPSE_STORAGE_KEY = "ytd_overview_collapsed";
+let collapsedSections = new Set();
+
+async function loadCollapsedSections() {
+  try {
+    const stored = await chrome.storage.local.get(COLLAPSE_STORAGE_KEY);
+    const list = stored?.[COLLAPSE_STORAGE_KEY];
+    collapsedSections = new Set(Array.isArray(list) ? list : []);
+  } catch (error) {
+    collapsedSections = new Set();
+  }
+  applyCollapsedSections();
+}
+
+async function persistCollapsedSections() {
+  try {
+    await chrome.storage.local.set({
+      [COLLAPSE_STORAGE_KEY]: [...collapsedSections],
+    });
+  } catch (error) {
+    /* 折叠状态存不下不影响功能,忽略 */
+  }
+}
+
+function applyCollapsedSections() {
+  document.querySelectorAll("[data-collapse]").forEach((toggle) => {
+    const id = toggle.dataset.collapse;
+    const section = document.getElementById(id);
+    if (!section) return;
+    const isCollapsed = collapsedSections.has(id);
+    section.classList.toggle("is-collapsed", isCollapsed);
+    toggle.setAttribute("aria-expanded", String(!isCollapsed));
+  });
+}
+
+function setupOverviewNav() {
+  document.querySelectorAll("[data-jump]").forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const target = document.getElementById(pill.dataset.jump);
+      if (!target || target.hidden) return;
+      /* 跳过去时如果那段是收起的,自动展开,否则点了像没反应 */
+      if (collapsedSections.has(pill.dataset.jump)) {
+        collapsedSections.delete(pill.dataset.jump);
+        applyCollapsedSections();
+        persistCollapsedSections();
+      }
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  document.querySelectorAll("[data-collapse]").forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const id = toggle.dataset.collapse;
+      if (collapsedSections.has(id)) collapsedSections.delete(id);
+      else collapsedSections.add(id);
+      applyCollapsedSections();
+      persistCollapsedSections();
+    });
+  });
+}
+
 /* CAROLYN: 渲染 Executive Summary。任何一段缺失都跳过,四段全空就整块隐藏。 */
 function renderExecSummary(execSummary) {
   const section = document.getElementById("execSummarySection");
@@ -946,6 +1015,15 @@ function renderExecSummary(execSummary) {
 function renderAnalysisResults(analysis) {
   /* CAROLYN */
   renderExecSummary(analysis.execSummary);
+  const jump = document.getElementById("overviewJump");
+  if (jump) jump.hidden = false;
+  const summaryPill = document.querySelector('[data-jump="execSummarySection"]');
+  if (summaryPill) {
+    summaryPill.hidden = Boolean(
+      document.getElementById("execSummarySection")?.hidden,
+    );
+  }
+  applyCollapsedSections();
 
   // Chapters
   const chapterList = document.getElementById("chapterList");
@@ -2025,6 +2103,9 @@ async function saveToCache(videoId) {
     }
 
     const cacheData = {
+      /* CAROLYN: analysis schema 版本。改了 Overview 结构就 +1,
+         旧缓存的 analysis 会被丢弃重算,字幕保留(那花过 Supadata credit)。 */
+      analysisSchema: ANALYSIS_SCHEMA_VERSION,
       analysis: currentAnalysis, // May be null if not yet analyzed
       transcript: currentTranscript,
       transcriptText: currentTranscriptText,
@@ -2111,6 +2192,13 @@ async function loadFromCache(videoId) {
     if (Date.now() - cached.timestamp > THIRTY_DAYS) {
       await chrome.storage.local.remove(`digest_${videoId}`);
       return null;
+    }
+
+    /* CAROLYN: schema 过期的 analysis 直接丢掉,否则新 UI 会拿旧结构去渲染,
+       表现就是「代码明明改了但界面没变」。字幕/翻译缓存留着不动。 */
+    if (cached.analysis && cached.analysisSchema !== ANALYSIS_SCHEMA_VERSION) {
+      debugLog("Analysis schema changed, discarding stale analysis:", videoId);
+      cached.analysis = null;
     }
 
     return cached;

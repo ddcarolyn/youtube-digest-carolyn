@@ -1559,3 +1559,90 @@ body {
   color: var(--sage);
   font-weight: 600;
 }
+
+/* ============================================================
+   CAROLYN: Overview 跳转目录 + 分段折叠
+   ============================================================ */
+.overview-jump {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding: 8px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.jump-pill {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--border-heavy);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.jump-pill:hover {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.jump-pill[hidden] {
+  display: none;
+}
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.section-toggle .section-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.section-chevron {
+  width: 8px;
+  height: 8px;
+  margin-right: 2px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.15s ease;
+}
+
+.section-toggle:hover .section-chevron {
+  border-color: var(--accent);
+}
+
+/* 收起状态:箭头转向,内容藏起来 */
+.section.is-collapsed .section-chevron {
+  transform: rotate(-45deg) translate(-2px, 2px);
+}
+
+.section.is-collapsed .chapter-list,
+.section.is-collapsed #quotesList {
+  display: none;
+}
+
+.section.is-collapsed .section-toggle {
+  margin-bottom: 0;
+}
