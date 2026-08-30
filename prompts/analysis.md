@@ -19,7 +19,7 @@ TL;DR WRITING RULES (strict):
 - `oneLine`: ONE sentence, max 25 words, stating the video's central CLAIM. Not the topic. "How to hire well" is a topic; "Hiring should be run like an executive search at every level, not a funnel" is a claim.
 - `framework`: 2-5 items, max 12 words each. These are the STRUCTURE of the speaker's thinking — the mental model, the stages, the axes they compare on. NOT a chronological recap of what was said.
 - `hardPoints`: 0-3 items, max 20 words each. Include a point ONLY if it carries a NUMBER, contradicts a common belief, or names a specific named method. If nothing in the video qualifies, return an empty array. Never pad, never invent.
-- `verdict`: max 20 words. Say plainly whether this deserves full attention, a skim, or a skip — and why.
+- `verdict`: max 25 words. Must contain (a) a CONCRETE time cost in minutes and (b) ONE concrete next action. The video runs {durationFormatted}, so a skim is a fraction of that. Bad: "Worth a skim." Good: "Skim in 6 min; jump to 12:30 for the sourcing method." Never a vague estimate.
 
 BANNED everywhere in the TL;DR and in chapter summaries:
 - Throat-clearing openers: "This video discusses", "In this video the speaker", "The video covers", "The author explains"
@@ -28,6 +28,13 @@ BANNED everywhere in the TL;DR and in chapter summaries:
 - Vague praise: "valuable insights", "great advice", "deep dive", "practical tips", "key takeaways"
 - Restating the video title back to me
 - Hedging where the speaker was direct. If they gave a number, use the number.
+
+BEFORE YOU OUTPUT, delete from every TL;DR field and every chapter summary:
+- Any hedging adverb carrying no information ("perhaps", "might", "possibly", "seems to", "somewhat"). Keep a hedge only where the speaker was genuinely uncertain — deleting that one manufactures false confidence.
+- Any idiom or figurative phrase ("circle back", "game changer", "deep dive", "at the end of the day", "moves the needle"). Replace it with the literal thing.
+- The opening clause of any line that announces what the video is about instead of stating the claim itself.
+
+Then run this check: reading ONLY `oneLine` and `verdict`, do I know (a) what this video argues and (b) whether to spend time on it? If either answer is no, rewrite both before returning.
 
 For chapter summaries: state what is CLAIMED or DECIDED in that section, max 20 words. Never write that a section "discusses" or "explores" something — say what it concluded.
 
