@@ -1090,23 +1090,25 @@ function validateAndFixTimestamps(analysis, maxSeconds) {
     .filter((seconds) => seconds !== null)
     .slice(0, 100);
 
-  /* CAROLYN: 快速总结块。上游 schema 里没有 tldr,这是本地二创加的字段。
+  /* CAROLYN: Executive Summary 块。上游 schema 里没有,这是本地二创加的字段。
      和其他字段一样按白名单重建,模型多吐的东西一律丢掉。 */
   const safeList = (value, maxItems, maxLength) =>
     (Array.isArray(value) ? value : [])
       .map((item) => safeString(item, maxLength))
       .filter(Boolean)
       .slice(0, maxItems);
-  const rawTldr =
-    analysis?.tldr && typeof analysis.tldr === "object" ? analysis.tldr : {};
-  const tldr = {
-    oneLine: safeString(rawTldr.oneLine, 300),
-    framework: safeList(rawTldr.framework, 5, 200),
-    hardPoints: safeList(rawTldr.hardPoints, 3, 250),
-    verdict: safeString(rawTldr.verdict, 200),
+  const rawSummary =
+    analysis?.execSummary && typeof analysis.execSummary === "object"
+      ? analysis.execSummary
+      : {};
+  const execSummary = {
+    oneLine: safeString(rawSummary.oneLine, 300),
+    framework: safeList(rawSummary.framework, 4, 200),
+    takeaway: safeList(rawSummary.takeaway, 3, 200),
+    verdict: safeString(rawSummary.verdict, 200),
   };
 
-  return { tldr, chapters, keyQuotes, keyMoments };
+  return { execSummary, chapters, keyQuotes, keyMoments };
 }
 
 // ============================================================

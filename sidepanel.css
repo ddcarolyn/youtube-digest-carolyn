@@ -1501,9 +1501,9 @@ body {
 }
 
 /* ============================================================
-   CAROLYN: 快速总结块(本地二创,上游没有这段)
+   CAROLYN: Executive Summary(本地二创,上游没有这段)
    ============================================================ */
-.tldr-card {
+.exec-card {
   background: var(--surface-raised);
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
@@ -1511,7 +1511,7 @@ body {
   padding: 14px 16px;
 }
 
-.tldr-oneline {
+.exec-oneline {
   margin: 0;
   font-family: var(--font-display);
   font-size: 15px;
@@ -1520,11 +1520,11 @@ body {
   color: var(--text);
 }
 
-.tldr-block {
+.exec-block {
   margin-top: 12px;
 }
 
-.tldr-label {
+.exec-label {
   display: block;
   margin-bottom: 5px;
   font-size: 10px;
@@ -1534,7 +1534,7 @@ body {
   color: var(--text-muted);
 }
 
-.tldr-list {
+.exec-list {
   margin: 0;
   padding-left: 18px;
   font-size: 13px;
@@ -1542,15 +1542,15 @@ body {
   color: var(--text-secondary);
 }
 
-.tldr-list li {
+.exec-list li {
   margin-bottom: 4px;
 }
 
-.tldr-list li::marker {
+.exec-list li::marker {
   color: var(--accent);
 }
 
-.tldr-verdict {
+.exec-verdict {
   margin: 12px 0 0;
   padding-top: 10px;
   border-top: 1px dashed var(--border-heavy);
