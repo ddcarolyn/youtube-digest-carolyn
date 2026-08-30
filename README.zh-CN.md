@@ -1,3 +1,10 @@
+> **📌 这是 Carolyn 的二创版(分支 `carolyn`)。**
+> Overview 顶部加了论文式 **Executive Summary**、反废话 prompt 规则、跳转目录与分段折叠。
+> 改了什么、为什么改、怎么跟上游同步 → **[README.carolyn.md](README.carolyn.md)**
+> 本分支下方的内容是上游原版说明,原样保留。`main` 分支是未改动的上游镜像。
+
+---
+
 # YouTube Digest
 
 [English](README.md) | [简体中文](README.zh-CN.md)

@@ -1,3 +1,11 @@
+> **📌 This is Carolyn's customized build (branch `carolyn`).**
+> Adds a paper-style **Executive Summary** on top of Overview, anti-filler prompt rules,
+> a jump nav and collapsible sections.
+> What changed and why → **[README.carolyn.md](README.carolyn.md)**
+> Everything below is the upstream README, kept as-is. Branch `main` is an untouched upstream mirror.
+
+---
+
 # YouTube Digest
 
 [English](README.md) | [简体中文](README.zh-CN.md)
