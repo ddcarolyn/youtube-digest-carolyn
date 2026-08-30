@@ -834,6 +834,16 @@ async function translateInterfaceSegments(surface, segments, rerender) {
 function getOverviewTranslationSegments() {
   if (!currentAnalysis) return [];
   const segments = [];
+  /* CAROLYN: TL;DR 放最前面,小批次翻译时优先出来 */
+  const tldr = currentAnalysis.tldr || {};
+  if (tldr.oneLine) segments.push({ id: "tldr-oneline", text: tldr.oneLine });
+  (tldr.framework || []).forEach((item, index) => {
+    if (item) segments.push({ id: `tldr-framework-${index}`, text: item });
+  });
+  (tldr.hardPoints || []).forEach((item, index) => {
+    if (item) segments.push({ id: `tldr-hard-${index}`, text: item });
+  });
+  if (tldr.verdict) segments.push({ id: "tldr-verdict", text: tldr.verdict });
   (currentAnalysis.chapters || []).forEach((chapter, index) => {
     if (chapter.title) {
       segments.push({ id: `chapter-${index}-title`, text: chapter.title });
@@ -887,7 +897,63 @@ function translateNotesContent() {
  * Renders the analysis results into the Overview tab.
  * Shows chapters and key quotes only.
  */
+/* CAROLYN: 渲染快速总结块。任何一段缺失都跳过,四段全空就整块隐藏。 */
+function renderTldr(tldr) {
+  const section = document.getElementById("tldrSection");
+  const card = document.getElementById("tldrCard");
+  if (!section || !card) return;
+  const data = tldr || {};
+  const framework = Array.isArray(data.framework) ? data.framework : [];
+  const hardPoints = Array.isArray(data.hardPoints) ? data.hardPoints : [];
+  if (
+    !data.oneLine &&
+    !framework.length &&
+    !hardPoints.length &&
+    !data.verdict
+  ) {
+    section.hidden = true;
+    card.innerHTML = "";
+    return;
+  }
+  section.hidden = false;
+  const parts = [];
+  if (data.oneLine) {
+    parts.push(
+      `<p class="tldr-oneline">${renderLocalizedContent(data.oneLine, "overview", "tldr-oneline")}</p>`,
+    );
+  }
+  if (framework.length) {
+    parts.push(
+      `<div class="tldr-block"><span class="tldr-label">Framework</span><ol class="tldr-list">${framework
+        .map(
+          (item, index) =>
+            `<li>${renderLocalizedContent(item, "overview", `tldr-framework-${index}`)}</li>`,
+        )
+        .join("")}</ol></div>`,
+    );
+  }
+  if (hardPoints.length) {
+    parts.push(
+      `<div class="tldr-block"><span class="tldr-label">Hard points</span><ul class="tldr-list">${hardPoints
+        .map(
+          (item, index) =>
+            `<li>${renderLocalizedContent(item, "overview", `tldr-hard-${index}`)}</li>`,
+        )
+        .join("")}</ul></div>`,
+    );
+  }
+  if (data.verdict) {
+    parts.push(
+      `<p class="tldr-verdict">${renderLocalizedContent(data.verdict, "overview", "tldr-verdict")}</p>`,
+    );
+  }
+  card.innerHTML = parts.join("");
+}
+
 function renderAnalysisResults(analysis) {
+  /* CAROLYN */
+  renderTldr(analysis.tldr);
+
   // Chapters
   const chapterList = document.getElementById("chapterList");
   chapterList.innerHTML = "";
