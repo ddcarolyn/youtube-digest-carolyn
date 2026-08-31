@@ -1,9 +1,17 @@
-> **📌 This is Carolyn's customized build (branch `carolyn`).**
-> Built for ADHD-style attention budgeting: an **Executive Summary** on top of Overview
-> answers "what does this video argue" and "what do I walk away with" in four lines,
-> so you decide whether a video deserves your time before you spend it.
-> What changed and why → **[README.carolyn.md](README.carolyn.md)**
-> Everything below is the upstream README, kept as-is. Branch `main` is an untouched upstream mirror.
+## 📌 Carolyn's build (branch `carolyn`)
+
+Built for ADHD-style attention budgeting. The expensive part of a long video is not its length, it is deciding whether to watch it at all. So this build opens the Overview with an **Executive Summary** that answers two questions in four lines:
+
+1. **What does this video argue?** The claim, not the topic.
+2. **What do I walk away with?** Only lines backed by a number, a named method, or an overturned assumption.
+
+Read the four lines, then choose: close the tab, skim for 3 minutes, or watch in full. The `verdict` line tells you how many minutes to budget and which timestamp to jump to.
+
+![Executive Summary demo](YouTube%20Digest%20demo%20carolyn.png)
+
+Full write-up of what changed and why: **[English](README.carolyn.en.md)** | **[简体中文](README.carolyn.md)**
+
+Everything below is the upstream README, kept as-is. Branch `main` is an untouched upstream mirror.
 
 ---
 

@@ -3,6 +3,10 @@
 > 分支 `carolyn` · fork 自 [zarazhangrui/youtube-digest](https://github.com/zarazhangrui/youtube-digest) v1.2.0 · MIT
 > `main` 分支是上游原版镜像,不做任何改动;所有二创都在 `carolyn` 分支上。
 
+[English](README.carolyn.en.md) | 简体中文
+
+![Executive Summary 实机效果](YouTube%20Digest%20demo%20carolyn.png)
+
 ## 二创的出发点
 
 上游把「看视频」这件事做得很好:字幕、双语翻译、章节、笔记都在一个侧边栏里。

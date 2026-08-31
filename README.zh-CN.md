@@ -1,8 +1,18 @@
-> **📌 这是 Carolyn 的二创版(分支 `carolyn`)。**
-> 为 ADHD 式注意力预算设计:Overview 顶部加了 **Executive Summary**,
-> 四行回答「这视频讲什么、我看完能拿走什么」,先决定值不值得看、分配多少精力,再开始看。
-> 改了什么、为什么改、怎么跟上游同步 → **[README.carolyn.md](README.carolyn.md)**
-> 本分支下方的内容是上游原版说明,原样保留。`main` 分支是未改动的上游镜像。
+## 📌 Carolyn 的二创版(分支 `carolyn`)
+
+为 ADHD 式注意力预算设计。看长视频最贵的不是时长,是判断要不要看。
+所以这个版本让 Overview 从一块 **Executive Summary** 开始,四行回答两个问题:
+
+1. **这视频在讲什么?** 要主张,不要主题。
+2. **我看完能拿走什么?** 每条必须带数字、具名方法或被推翻的假设,带不出来就不写。
+
+读完四行再决定:关掉、花 3 分钟扫一遍、还是完整看。`verdict` 会直接告诉你建议花几分钟、跳到哪个时间戳。
+
+![Executive Summary 实机效果](YouTube%20Digest%20demo%20carolyn.png)
+
+改了什么、为什么改、怎么跟上游同步 → **[简体中文](README.carolyn.md)** | **[English](README.carolyn.en.md)**
+
+本分支下方的内容是上游原版说明,原样保留。`main` 分支是未改动的上游镜像。
 
 ---
 
