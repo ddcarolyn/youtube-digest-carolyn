@@ -45,7 +45,7 @@ async function loadPromptSection(fileName, heading, variables = {}) {
     if (!response.ok) {
       throw new Error(`Could not load prompt file: ${fileName}`);
     }
-    markdown = await response.text();
+    markdown = (await response.text()).replace(/\r\n/g, "\n");
     promptFileCache.set(fileName, markdown);
   }
 

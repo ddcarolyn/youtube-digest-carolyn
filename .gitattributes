@@ -1,0 +1,4 @@
+# Prompt parsing in background.js expects LF; force LF on checkout everywhere
+# so Windows clones with core.autocrlf=true do not break the extension.
+* text=auto eol=lf
+*.png binary
