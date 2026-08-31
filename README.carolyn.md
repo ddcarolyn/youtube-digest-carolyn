@@ -3,12 +3,27 @@
 > 分支 `carolyn` · fork 自 [zarazhangrui/youtube-digest](https://github.com/zarazhangrui/youtube-digest) v1.2.0 · MIT
 > `main` 分支是上游原版镜像,不做任何改动;所有二创都在 `carolyn` 分支上。
 
-## 为什么要改
+## 二创的出发点
 
-上游的 Overview 只有 **Chapters + Key Quotes**,两样都是按时间轴铺开的。
-想知道「这视频到底在讲什么、我看完能拿走什么」,还是得从头扫一遍章节。
+上游把「看视频」这件事做得很好:字幕、双语翻译、章节、笔记都在一个侧边栏里。
+但它默认你已经决定要看这个视频了。
 
-所以加了一块**论文式 Executive Summary**,放在 Overview 最上面,四行读完就能决定要不要花这个时间。
+我想解决的是前一步:**要不要看、看多深**。
+
+注意力是配额,对 ADHD 脑来说尤其是(整套规则来自 [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd))。
+看长视频最贵的不是时长,是判断:点开一个 40 分钟的视频,看到 10 分钟才发现内容自己早就会,
+这 10 分钟不会退回来。上游的 Overview 是 Chapters + Key Quotes,都按时间轴铺开,
+想做这个判断还是得从头扫一遍章节,等于先付费再验货。
+
+所以 Overview 顶部加了一块 Executive Summary,四行回答两个问题:
+
+1. **这视频在讲什么?** 要的是主张,不是主题。"怎么招人"是主题,"招聘该按 executive search 做而不是漏斗"才是主张。
+2. **我看完能拿走什么?** 能做或能决定什么不一样的事,每条都得带数字、具名方法或被推翻的假设,带不出来就不许写。
+
+读完这四行再决定:关掉、花 3 分钟只扫 Summary、还是值得完整看。
+`verdict` 会直接给出建议:花几分钟、跳到哪个时间戳。
+
+下面的反废话 prompt 规则、导航、缓存修复,都是为这两个问题服务的。
 
 ## 改了什么
 
@@ -18,10 +33,10 @@ Overview 顶部新增一块,四段固定结构:
 
 | 字段 | 上限 | 回答什么 |
 |---|---|---|
-| `oneLine` | 1 句 ≤25 词 | **讲了啥** —— 视频的主张,不是主题。"怎么招人"是主题,"招聘该按 executive search 做而不是漏斗"才是主张 |
-| `framework` | 2–4 条,每条 ≤12 词 | 作者思考的骨架 —— 心智模型 / 阶段 / 拿来比较的轴。不是流水账复述 |
-| `takeaway` | 1–3 条,每条 ≤15 词 | **你能收获啥** —— 看完能做或能决定什么不一样的事 |
-| `verdict` | ≤25 词 | 花几分钟 + 跳到哪个时间戳 |
+| `oneLine` | 1 句 ≤25 词 | 问题 1「讲了什么」:视频的主张,不是主题 |
+| `framework` | 2–4 条,每条 ≤12 词 | 作者思考的骨架:心智模型 / 阶段 / 拿来比较的轴,不是流水账复述 |
+| `takeaway` | 1–3 条,每条 ≤15 词 | 问题 2「能拿走什么」:看完能做或能决定什么不一样的事 |
+| `verdict` | ≤25 词 | 精力分配建议:花几分钟 + 跳到哪个时间戳 |
 
 **takeaway 防注水规则**:每条必须带「一个数字 / 一个具名方法 / 一个被推翻的假设」之一。
 三样都没有就是废话,**宁可少写一条也不许凑数**。视频真的没有可操作的东西,就老实写一条说没有。
@@ -142,4 +157,4 @@ npm run check # 发布文件白名单校验
 ## 致谢
 
 - 上游:[zarazhangrui/youtube-digest](https://github.com/zarazhangrui/youtube-digest)(MIT)
-- 反废话规则来源:[ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)(MIT)
+- 设计出发点与反废话规则:[ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)(MIT)

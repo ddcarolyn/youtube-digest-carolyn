@@ -1,6 +1,7 @@
 > **📌 This is Carolyn's customized build (branch `carolyn`).**
-> Adds a paper-style **Executive Summary** on top of Overview, anti-filler prompt rules,
-> a jump nav and collapsible sections.
+> Built for ADHD-style attention budgeting: an **Executive Summary** on top of Overview
+> answers "what does this video argue" and "what do I walk away with" in four lines,
+> so you decide whether a video deserves your time before you spend it.
 > What changed and why → **[README.carolyn.md](README.carolyn.md)**
 > Everything below is the upstream README, kept as-is. Branch `main` is an untouched upstream mirror.
 

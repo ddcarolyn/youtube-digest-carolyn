@@ -1,5 +1,6 @@
 > **📌 这是 Carolyn 的二创版(分支 `carolyn`)。**
-> Overview 顶部加了论文式 **Executive Summary**、反废话 prompt 规则、跳转目录与分段折叠。
+> 为 ADHD 式注意力预算设计:Overview 顶部加了 **Executive Summary**,
+> 四行回答「这视频讲什么、我看完能拿走什么」,先决定值不值得看、分配多少精力,再开始看。
 > 改了什么、为什么改、怎么跟上游同步 → **[README.carolyn.md](README.carolyn.md)**
 > 本分支下方的内容是上游原版说明,原样保留。`main` 分支是未改动的上游镜像。
 
